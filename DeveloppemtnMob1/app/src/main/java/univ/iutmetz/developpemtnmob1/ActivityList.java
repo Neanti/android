@@ -146,7 +146,7 @@ public class ActivityList extends AppCompatActivity implements AdapterView.OnIte
         }
         else {
             listeRevues.set(indiceMAJ,(Revue) data.getSerializableExtra("revue"));
-            chargeImage(this.listeImages.size()-1);
+            chargeImage(indiceMAJ);
         }
         revueDAO.ecriture(listeRevues);
     }
