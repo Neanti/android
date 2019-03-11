@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">RevuesOnline</string>
+    <string name="titre">Welcome to RevuesOnline</string>
+    <string name="add">Add</string>
+    <string name="retour">CANCEL</string>
+    <string name="bon">Bienvenue %1$s</string>
+
+    <string-array name="periode">
+        <item> Quotidien </item>
+        <item> Hebdomadaire </item>
+        <item> Bimensuel </item>
+        <item> Mensuel </item>
+        <item>  Trimestriel </item>
+    </string-array>
+    <string name="title_activity_list">ActivityList</string>
+
+</resources>
