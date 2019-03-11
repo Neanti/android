@@ -47,6 +47,12 @@ public class ActivityList extends AppCompatActivity implements AdapterView.OnIte
             this.indiceMAJ=savedInstanceState.getInt("indice");
 
         }
+
+        listeImages = new ArrayList<>();
+        for(int i=0;i<listeRevues.size(); i++){
+            listeImages.add(null);
+            this.chargeImage(i);
+        }
         Log.i("cycle", "onCreate");
 
 
@@ -135,16 +141,18 @@ public class ActivityList extends AppCompatActivity implements AdapterView.OnIte
 
         if (requestCode==APPEL_NOUVELLE && resultCode==SaisieActivity.ACTION_VALIDEE){
             listeRevues.add((Revue) data.getSerializableExtra("revue"));
+            chargeImage(this.listeImages.size()-1);
         }
         else {
             listeRevues.set(indiceMAJ,(Revue) data.getSerializableExtra("revue"));
+            chargeImage(this.listeImages.size()-1);
         }
         revueDAO.ecriture(listeRevues);
     }
 
     private void chargeImage(int idx) {
         ImageFromURL ifu = new ImageFromURL(this);
-        ifu.execute("http://devweb.iutmetz.univ-lorraine.fr/~laroche5/devmob_unes/"+this.listeRevues.get(idx).getVisuel(), String.valueOf(idx));
+        ifu.execute("https://devweb.iutmetz.univ-lorraine.fr/~laroche5/devmob_unes/"+this.listeRevues.get(idx).getVisuel(), String.valueOf(idx));
     }
 
     public void receptionneImage(Object[] result){

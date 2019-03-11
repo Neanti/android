@@ -12,6 +12,7 @@ public class ImageFromURL extends AsyncTask<String, Void, Object[]> {
 private ActivityList activite;
 
     public ImageFromURL(ActivityList activityList) {
+        this.activite = activityList;
     }
 
     protected Object[] doInBackground(String... urlEtIndice){
@@ -31,6 +32,7 @@ private ActivityList activite;
 
    @Override
    protected void onPostExecute(Object[] result){
+
         this.activite.receptionneImage(result);
    }
 
