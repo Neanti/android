@@ -141,6 +141,7 @@ public class ActivityList extends AppCompatActivity implements AdapterView.OnIte
 
         if (requestCode==APPEL_NOUVELLE && resultCode==SaisieActivity.ACTION_VALIDEE){
             listeRevues.add((Revue) data.getSerializableExtra("revue"));
+            listeImages.add(null);
             chargeImage(this.listeImages.size()-1);
         }
         else {

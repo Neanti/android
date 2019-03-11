@@ -2,6 +2,7 @@ package univ.iutmetz.developpemtnmob1;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -67,12 +68,13 @@ public class SaisieActivity extends AppCompatActivity {
         super.onStart();
 
         this.title=this.findViewById(R.id.edit_title);
+        this.image=this.findViewById(R.id.edit_img);
         this.fee=this.findViewById(R.id.edit_fee);
         this.reference=this.findViewById(R.id.edit_ref);
         this.description=this.findViewById(R.id.edit_description);
         this.btn_update=this.findViewById(R.id.btn_add);
         this.spinner=this.findViewById(R.id.spinner);
-        this.image=this.findViewById(R.id.edit_img);
+
 
 
         if(revueMAJ!=null){
@@ -101,11 +103,12 @@ public class SaisieActivity extends AppCompatActivity {
         Intent intent = new Intent();
         Intent revue =intent.putExtra("revue", r);
         r.setTitle(title.getText().toString());
+        r.setVisuel(image.getText().toString());
         r.setFee(Float.parseFloat(fee.getText().toString()));
         r.setDescription(description.getText().toString());
         r.setPeriode(spinner.getSelectedItemPosition());
         r.setReference(reference.getText().toString());
-        r.setVisuel(image.getText().toString());
+
         this.setResult(ACTION_VALIDEE, intent);
 
         Toast.makeText(this, title.getText() + " added " + " ( " + fee.getText() + " euros ) ", Toast.LENGTH_LONG).show();
