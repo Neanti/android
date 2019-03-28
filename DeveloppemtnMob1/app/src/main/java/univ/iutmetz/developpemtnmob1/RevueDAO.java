@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class RevueDAO {
 
-    private static final String FICHIER ="fichier";
+   private static final String FICHIER ="fichier";
     private Context contexte;
     private static RevueDAO instanceRevueDAO;
 
@@ -56,4 +56,5 @@ public class RevueDAO {
         return lecture();
 
     }
+
 }

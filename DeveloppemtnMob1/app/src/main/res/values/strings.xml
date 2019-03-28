@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">RevuesOnline</string>
     <string name="titre">Welcome to RevuesOnline</string>
+    <string name="compte">RevuesOnline, créer un compte ici!</string>
     <string name="add">Add</string>
     <string name="retour">CANCEL</string>
     <string name="bon">Bienvenue %1$s</string>

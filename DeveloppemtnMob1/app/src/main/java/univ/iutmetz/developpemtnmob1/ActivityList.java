@@ -18,19 +18,20 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 
-public class ActivityList extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class ActivityList extends AppCompatActivity implements AdapterView.OnItemClickListener, ActiviteEnAttenteAvecResultat {
 
     private ArrayList<Revue> listeRevues;
     private ListView listView;
     private ArrayList<Bitmap> listeImages;
     private ListeRevuesAdaptateur adaptateur;
-    private String utilisateur;
+
     private TextView bn;
     private int indiceMAJ;
     public static final int APPEL_NOUVELLE =1;
     public static final int ACTION_ANNULEE=1;
     public static final int APPEL_MAJ =2;
     private RevueDAO revueDAO = RevueDAO.getInstanceRevueDAO(this);
+    private User utilisateur;
 
 
 
@@ -40,11 +41,13 @@ public class ActivityList extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
         this.listeRevues = RevueDAO.getInstanceRevueDAO(this).findAll();
-      this.utilisateur=this.getIntent().getStringExtra("user");
         if (savedInstanceState != null){
-            this.utilisateur = savedInstanceState.getString("user");
+
             this.listeRevues= (ArrayList<Revue>)savedInstanceState.getSerializable("liste");
             this.indiceMAJ=savedInstanceState.getInt("indice");
+
+            this.utilisateur.setMail(this.getIntent().getStringExtra("mail"));
+            this.utilisateur.setDroit(Integer.valueOf(this.getIntent().getStringExtra("droit")));
 
         }
 
@@ -86,6 +89,12 @@ public class ActivityList extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onStart() {
         super.onStart();
+
+        UserDAO.getInstanceUserDAO(this).findAll();
+        this.utilisateur = new User();
+        this.utilisateur.setMail(this.getIntent().getStringExtra("mail"));
+        this.utilisateur.setDroit(Integer.valueOf(this.getIntent().getStringExtra("droit")));
+
         this.listView = this.findViewById(R.id.la_liste);
         this.adaptateur = new ListeRevuesAdaptateur(
                 this,
@@ -94,8 +103,10 @@ public class ActivityList extends AppCompatActivity implements AdapterView.OnIte
         this.listView.setAdapter(adaptateur);
         this.listView.setOnItemClickListener(this);
         this.bn =(TextView)this.findViewById(R.id.la_bienvenue);
-        bn.setText(String.format(getResources().getString(R.string.bon),this.utilisateur));
+        bn.setText(String.format(getResources().getString(R.string.bon),this.utilisateur.getMail()));
         Log.i("cycle", "onStart");
+
+
     }
 
     protected void onPause(){
@@ -113,7 +124,7 @@ public class ActivityList extends AppCompatActivity implements AdapterView.OnIte
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putString("user",this.utilisateur);
+        outState.putString("user",this.utilisateur.getMail());
         outState.putSerializable("liste", this.listeRevues);
         outState.putInt("indice", this.indiceMAJ);
     }
@@ -159,6 +170,16 @@ public class ActivityList extends AppCompatActivity implements AdapterView.OnIte
     public void receptionneImage(Object[] result){
         listeImages.set(Integer.parseInt(result[1].toString()),(Bitmap)result[0]);
         this.adaptateur.notifyDataSetChanged();
+    }
+
+    @Override
+    public void notifyRetourRequete(String resultat) {
+
+    }
+
+    @Override
+    public void notifyRetourRequeteFindAll(ArrayList liste) {
+
     }
 }
 
