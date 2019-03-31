@@ -11,18 +11,18 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class ListeRevuesAdaptateur extends ArrayAdapter<Revue> {
+public class ListeRevuesAdaptateur extends ArrayAdapter<Revue1> {
 
     private ArrayList<Bitmap> listeIcones;
 
-    public ListeRevuesAdaptateur(Context contexte, ArrayList<Revue> liste, ArrayList<Bitmap> icones){
+    public ListeRevuesAdaptateur(Context contexte, ArrayList<Revue1> liste, ArrayList<Bitmap> icones){
         super(contexte,0,liste);
-        this.listeIcones =icones;
+        this.listeIcones = icones;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
 
-        Revue uneRevue = getItem(position);
+        Revue1 uneRevue = getItem(position);
 
         if (convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_liste_revues, parent, false);

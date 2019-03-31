@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity implements ActiviteEnAttente
     private EditText email ;
     private EditText pwd;
     private int indiceMAJ;
+    public ArrayList<User> liste;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,12 +33,9 @@ public class MainActivity extends AppCompatActivity implements ActiviteEnAttente
     @Override
     public void onStart(){
         super.onStart();
-
+        UserDAO.getInstanceUserDAO(this).findAll();
         this.email=this.findViewById(R.id.edit_email);
         this.pwd=this.findViewById(R.id.edit_pwd);
-
-        UserDAO.getInstanceUserDAO(this).findAll();
-
         Log.i("cycle", "onStart");
     }
     @Override
@@ -75,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements ActiviteEnAttente
 
                  startActivityForResult(intent, indiceMAJ);
              }
-             Log.i("YOLO","NOT FOUND");
             }
         }
     }
@@ -91,19 +89,14 @@ public class MainActivity extends AppCompatActivity implements ActiviteEnAttente
 
     }
 
+
+
     @Override
     public void notifyRetourRequeteFindAll(ArrayList liste) {
+        Log.i("YOLO","notifyretourFIndall MainActivity");
         this.liste = new ArrayList<>();
-    this.liste=liste;
-        Iterator<User> it = this.liste.iterator();
-        User r;
-        while(it.hasNext())
-        {
-            r = it.next();
-            Log.i("YOLO",r.toString());
-        }
-
+        this.liste = liste;
+        //Log.i("YOLO",this.liste.toString());
     }
 
-    public ArrayList<User> liste;
 }

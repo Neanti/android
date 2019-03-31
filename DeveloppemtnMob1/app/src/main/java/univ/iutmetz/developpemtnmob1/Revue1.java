@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Revue1 implements Serializable {
     private int id;
-    private boolean dispo;
+    private int dispo;
     private String reference ;
     private String description;
     private String title;
@@ -46,15 +46,15 @@ public class Revue1 implements Serializable {
         this.id = id;
     }
 
-    public boolean isDispo() {
+    public int getDispo() {
         return dispo;
     }
 
-    public void setDispo(boolean dispo) {
+    public void setDispo(int dispo) {
         this.dispo = dispo;
     }
 
-    public Revue1(int id, boolean dispo, String reference, String description, String title, double fee, String periode, String visuel) {
+    public Revue1(int id, int dispo, String reference, String description, String title, double fee, String periode, String visuel) {
         this.id = id;
         this.dispo = dispo;
         this.reference = reference;

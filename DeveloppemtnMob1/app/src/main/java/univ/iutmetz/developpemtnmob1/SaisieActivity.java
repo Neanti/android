@@ -29,7 +29,7 @@ public class SaisieActivity extends AppCompatActivity implements ActiviteEnAtten
     public static final int ACTION_ANNULEE =1;
     public static final int ACTION_VALIDEE =2;
     private Button btn_update;
-    Revue revueMAJ;
+    Revue1 revueMAJ;
     private Spinner periode;
 
     @Override
@@ -38,7 +38,7 @@ public class SaisieActivity extends AppCompatActivity implements ActiviteEnAtten
         setContentView(R.layout.activity_saisie);
 
         if (this.getIntent().getSerializableExtra("revue")!=null){
-            this.revueMAJ = (Revue) this.getIntent().getSerializableExtra("revue");
+            this.revueMAJ = (Revue1) this.getIntent().getSerializableExtra("revue");
 
         }else {
             this.revueMAJ =null;
@@ -84,7 +84,7 @@ public class SaisieActivity extends AppCompatActivity implements ActiviteEnAtten
             fee.setText(String.valueOf(revueMAJ.getFee()));
             description.setText(revueMAJ.getDescription());
             btn_update.setText("UPDATE");
-            periode.setSelection(revueMAJ.getPeriode());
+            //periode.setSelection(revueMAJ.getPeriode().toString());
             visuel.setText(revueMAJ.getVisuel());
 
 
@@ -97,11 +97,11 @@ public class SaisieActivity extends AppCompatActivity implements ActiviteEnAtten
     public void Add(View view){
     if(this.reference.getText().toString().isEmpty() || this.title.getText().toString().isEmpty() || this.description.getText().toString().isEmpty() ||  this.fee.getText().toString().isEmpty() ||  this.visuel.getText().toString().isEmpty()) {
 
-        Toast.makeText(this, "Veuillez remplir tout les champs", Toast.LENGTH_SHORT).show();
-    }
+            Toast.makeText(this, "Veuillez remplir tout les champs", Toast.LENGTH_SHORT).show();
+        }
     else {
-        Revue1 r = new Revue1(title.getText().toString(),this.description.getText().toString(),this.reference.getText().toString(),this.periode.getSelectedItem().toString(),Double.valueOf(this.fee.getText().toString()),this.visuel.getText().toString());
-        Revue1DAO.getInstanceRevue1DAO(this).insert(r);
+            Revue1 r = new Revue1(title.getText().toString(),this.description.getText().toString(),this.reference.getText().toString(),this.periode.getSelectedItem().toString(),Double.valueOf(this.fee.getText().toString()),this.visuel.getText().toString());
+            Revue1DAO.getInstanceRevue1DAO(this).insert(r);
 
 
         Toast.makeText(this, title.getText() + " added " + " ( " + fee.getText() + " euros ) ", Toast.LENGTH_LONG).show();

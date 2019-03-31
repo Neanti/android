@@ -20,17 +20,16 @@ import java.util.ArrayList;
 
 public class ActivityList extends AppCompatActivity implements AdapterView.OnItemClickListener, ActiviteEnAttenteAvecResultat {
 
-    private ArrayList<Revue> listeRevues;
+    private ArrayList<Revue1> listeRevues;
     private ListView listView;
     private ArrayList<Bitmap> listeImages;
     private ListeRevuesAdaptateur adaptateur;
-
     private TextView bn;
     private int indiceMAJ;
     public static final int APPEL_NOUVELLE =1;
     public static final int ACTION_ANNULEE=1;
     public static final int APPEL_MAJ =2;
-    private RevueDAO revueDAO = RevueDAO.getInstanceRevueDAO(this);
+    private Revue1DAO revue1DAO = Revue1DAO.getInstanceRevue1DAO(this);
     private User utilisateur;
 
 
@@ -40,23 +39,19 @@ public class ActivityList extends AppCompatActivity implements AdapterView.OnIte
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        this.listeRevues = RevueDAO.getInstanceRevueDAO(this).findAll();
         if (savedInstanceState != null){
-
-            this.listeRevues= (ArrayList<Revue>)savedInstanceState.getSerializable("liste");
-            this.indiceMAJ=savedInstanceState.getInt("indice");
 
             this.utilisateur.setMail(this.getIntent().getStringExtra("mail"));
             this.utilisateur.setDroit(Integer.valueOf(this.getIntent().getStringExtra("droit")));
-
+            this.indiceMAJ=savedInstanceState.getInt("indice");
         }
 
-        listeImages = new ArrayList<>();
-        for(int i=0;i<listeRevues.size(); i++){
-            listeImages.add(null);
-            this.chargeImage(i);
-        }
-        Log.i("cycle", "onCreate");
+        //listeImages = new ArrayList<>();
+        //for(int i=0;i<listeRevues.size(); i++){
+          //  listeImages.add(null);
+            //this.chargeImage(i);
+        //}
+        Log.i("YOLO", "onCreateActivitylist");
 
 
 
@@ -89,22 +84,14 @@ public class ActivityList extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onStart() {
         super.onStart();
-
-        UserDAO.getInstanceUserDAO(this).findAll();
+        Log.i("YOLO", "onStartActivitylistr");
         this.utilisateur = new User();
         this.utilisateur.setMail(this.getIntent().getStringExtra("mail"));
         this.utilisateur.setDroit(Integer.valueOf(this.getIntent().getStringExtra("droit")));
+        Revue1DAO.getInstanceRevue1DAO(this).Libre(this.utilisateur);
+        //Revue1DAO.getInstanceRevue1DAO(this).Libre(this.utilisateur);
 
-        this.listView = this.findViewById(R.id.la_liste);
-        this.adaptateur = new ListeRevuesAdaptateur(
-                this,
-                this.listeRevues, this.listeImages);
-        this.listView.setAdapter(this.adaptateur);
-        this.listView.setAdapter(adaptateur);
-        this.listView.setOnItemClickListener(this);
-        this.bn =(TextView)this.findViewById(R.id.la_bienvenue);
-        bn.setText(String.format(getResources().getString(R.string.bon),this.utilisateur.getMail()));
-        Log.i("cycle", "onStart");
+        Log.i("YOLO", "onStartActivitylistr");
 
 
     }
@@ -144,27 +131,11 @@ public class ActivityList extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data){
 
-        if (resultCode==SaisieActivity.ACTION_ANNULEE){
-            return;
-        }
-
-        if (requestCode==APPEL_NOUVELLE && resultCode==SaisieActivity.ACTION_VALIDEE){
-            listeRevues.add((Revue) data.getSerializableExtra("revue"));
-            listeImages.add(null);
-            chargeImage(this.listeImages.size()-1);
-        }
-        else {
-            listeRevues.set(indiceMAJ,(Revue) data.getSerializableExtra("revue"));
-            chargeImage(indiceMAJ);
-        }
-        revueDAO.ecriture(listeRevues);
-    }
 
     private void chargeImage(int idx) {
         ImageFromURL ifu = new ImageFromURL(this);
-        ifu.execute("https://devweb.iutmetz.univ-lorraine.fr/~laroche5/devmob_unes/"+this.listeRevues.get(idx).getVisuel(), String.valueOf(idx));
+        ifu.execute("https://devweb.iutmetz.univ-lorraine.fr/~gay28u/"+this.listeRevues.get(idx).getVisuel(), String.valueOf(idx));
     }
 
     public void receptionneImage(Object[] result){
@@ -179,7 +150,23 @@ public class ActivityList extends AppCompatActivity implements AdapterView.OnIte
 
     @Override
     public void notifyRetourRequeteFindAll(ArrayList liste) {
-
+        Log.i("YOLO","findallretour revue");
+        this.listeRevues = new ArrayList<>();
+        this.listeRevues =  liste;
+        this.listView = this.findViewById(R.id.la_liste);
+        listeImages = new ArrayList<>();
+        for(int i=0;i<listeRevues.size(); i++){
+            listeImages.add(null);
+            this.chargeImage(i);
+        }
+        this.adaptateur = new ListeRevuesAdaptateur(
+                this,
+                this.listeRevues, this.listeImages);
+        this.listView.setAdapter(this.adaptateur);
+        this.listView.setAdapter(adaptateur);
+        this.listView.setOnItemClickListener(this);
+        this.bn =(TextView)this.findViewById(R.id.la_bienvenue);
+        bn.setText(String.format(getResources().getString(R.string.bon),this.utilisateur.getMail()));
     }
 }
 

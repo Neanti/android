@@ -2,6 +2,8 @@ package univ.iutmetz.developpemtnmob1;
 
 
 
+import android.util.Log;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,8 +34,14 @@ public class UserDAO implements DAO<User> {
 
 
     public void findAll(){
+        Log.i("YOLO","FindAll");
         RequeteSQL req = new RequeteSQL(activite,this);
-        req.execute(URL_SERVEUR+"FindAll.php");
+        req.execute(URL_SERVEUR+"GetUser.php");
+    }
+
+    @Override
+    public void Libre(User u) {
+
     }
 
 
@@ -46,13 +54,14 @@ public class UserDAO implements DAO<User> {
 
 
     public void traiteFindAll(String result){
+        Log.i("YOLO","traitefindall User");
 
         ArrayList<User> liste = new ArrayList<User>();
         try{
             JSONArray array = new JSONArray(result);
             for (int i =0; i< array.length(); i++){
                 JSONObject row = array.getJSONObject(i);
-                User u = new User(row.getInt("id"),
+                User u = new User(row.getInt("uid"),
                         row.getString("mail"),
                         row.getString("pass"),
                         row.getInt("droit"));
@@ -60,7 +69,7 @@ public class UserDAO implements DAO<User> {
             }
             this.activite.notifyRetourRequeteFindAll(liste);
         } catch(JSONException je){
-            System.out.println("pb json" + je);
+            Log.i("YOLO","json exp" + je);
         }
     }
 }

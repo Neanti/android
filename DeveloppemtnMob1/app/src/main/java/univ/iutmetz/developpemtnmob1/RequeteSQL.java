@@ -52,7 +52,7 @@ public class RequeteSQL extends AsyncTask<String, Void, String> {
 
     @Override
     protected void onPostExecute(String result){
-
+        Log.i("YOLO","TEST" + result);
         if ( result.startsWith("[")) {
             this.dao.traiteFindAll(result);
         } else {
