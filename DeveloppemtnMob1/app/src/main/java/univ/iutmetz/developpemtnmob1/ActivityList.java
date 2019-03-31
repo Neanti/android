@@ -116,10 +116,9 @@ public class ActivityList extends AppCompatActivity implements AdapterView.OnIte
         outState.putInt("indice", this.indiceMAJ);
     }
 
-
     public void onClickNouvelleRevue(View view){
-        Intent intent = new Intent(ActivityList.this, SaisieActivity.class);
-        startActivityForResult(intent,APPEL_NOUVELLE);
+            Intent intent = new Intent(ActivityList.this, SaisieActivity.class);
+            startActivityForResult(intent, APPEL_NOUVELLE);
     }
 
     @Override
@@ -128,10 +127,7 @@ public class ActivityList extends AppCompatActivity implements AdapterView.OnIte
         intent.putExtra("revue", this.listeRevues.get(position));
         startActivityForResult(intent, APPEL_MAJ);
         indiceMAJ=position;
-
     }
-
-
 
     private void chargeImage(int idx) {
         ImageFromURL ifu = new ImageFromURL(this);
